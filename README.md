@@ -121,3 +121,64 @@ To connect an MCP client, use this server entry:
   }
 }
 ```
+
+## Evidence-Grounded Questions
+
+Ask a question about garment care, dress codes, layering, or colours:
+
+```bash
+uv run outfit-ask "Can I wear my suede Chelsea boots in the snow?"
+```
+
+The agent answers only from the documents in `data/docs/` and from the
+wardrobe and weather tools, and every answer lists the sections it cites. If
+the documents don't cover the question, it says what is missing. If the
+question is too vague, it asks one clarifying question.
+
+### Document index
+
+`uv run outfit-index` splits each document into its `##` sections, embeds them
+locally with FastEmbed (`BAAI/bge-small-en-v1.5`), and writes the index to
+`data/index/`. The first run downloads the model (about 65 MB) into `.cache/`;
+later runs use the cache and need no network or OpenRouter credit. The index
+records a hash of every document, and the agent refuses to start with an index
+that no longer matches them.
+
+### State graph
+
+![QA state graph](evidence/state-graph.png)
+
+The workflow is a LangGraph graph in `src/agent_project/qa_graph.py`; the
+generated Mermaid version is `evidence/state-graph.mmd`. After each search, the
+model picks one next step: answer, search again, use the wardrobe or weather
+tool, ask the user, or abstain. Code decides what it may pick and checks the
+result:
+
+- **Budgets:** at most 2 searches, 2 tool calls, and 6 decisions. A step is
+  removed from the model's options once its budget is used up.
+- **Citations:** an answer is accepted only if every evidence id it cites was
+  actually retrieved in this run. Otherwise the model gets one retry with the
+  list of valid ids, and then the graph abstains.
+- **Abstaining:** one search shows only the top 4 sections, so an abstention
+  after one search isn't accepted. The graph first searches for whatever the
+  model said was missing.
+
+### Evaluation
+
+`data/eval/questions.json` has 15 questions: 11 answerable, 3 unanswerable,
+and 1 too vague to answer. `uv run outfit-eval` reports retrieval and answers
+separately in `evidence/eval-report.md`, with one trace per question in
+`evidence/eval-traces/`.
+
+| Retrieval (no model) | Result |
+| --- | --- |
+| Expected section ranked first | 11 of 11 |
+| All expected sections in the top 4 | 9 of 11 (q10 and q11 miss their second part) |
+| Lowest top score, answerable / highest, unanswerable | 0.733 / 0.721 |
+
+| Answers (live model) | Result |
+| --- | --- |
+| Correct outcome (answer, abstain, or ask) | 15 of 15 |
+| Answers citing an expected source | 11 of 11 |
+| Cost of the whole run | about USD 0.002 |
+

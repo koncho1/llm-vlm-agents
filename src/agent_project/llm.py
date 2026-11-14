@@ -21,6 +21,7 @@ class ModelClient(Protocol):
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        tool_choice: str | None = None,
     ) -> dict[str, Any]: ...
 
 
@@ -58,6 +59,7 @@ class OpenRouterClient:
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        tool_choice: str | None = None,
     ) -> dict[str, Any]:
         request: dict[str, Any] = {
             "model": self.model,
@@ -68,6 +70,8 @@ class OpenRouterClient:
         }
         if tools:
             request["tools"] = tools
+            if tool_choice:
+                request["tool_choice"] = tool_choice
 
         started = time.perf_counter()
         response = self.client.chat.completions.create(**request)
@@ -115,8 +119,9 @@ class MockClient:
         self,
         messages: list[dict[str, Any]],
         tools: list[dict[str, Any]] | None = None,
+        tool_choice: str | None = None,
     ) -> dict[str, Any]:
-        del messages, tools
+        del messages, tools, tool_choice
         if not self.responses:
             raise RuntimeError("Mock response queue is empty")
         return self.responses.popleft()

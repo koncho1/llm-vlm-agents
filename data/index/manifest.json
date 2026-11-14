@@ -1,0 +1,11 @@
+{
+  "model": "BAAI/bge-small-en-v1.5",
+  "chunk_count": 27,
+  "docs": {
+    "color-matching.md": "15642ba9d0b2baeabb7009015a7506c9976783d92b75ddf02efabc960ad3f353",
+    "dress-codes.md": "9fb9a7b358083da3959ff080415609f78de75fd31765d2760f33feec82907bc0",
+    "fabric-care.md": "655560e5a92eb1f260999eee971fadab0badfa958d25b5019f88c93ed353e15c",
+    "layering-and-weather.md": "502bb444eca8e1b150fa3d4a66767fab78edfa6b579d346ecc16c94af6c336bb",
+    "shoe-care.md": "1eee11ba01a38317b48751ba8ff25209a3139590d11d84951734f7c61a013211"
+  }
+}

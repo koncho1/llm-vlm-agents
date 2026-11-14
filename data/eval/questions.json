@@ -1,0 +1,17 @@
+[
+  {"id": "q01", "question": "How should I wash my wool sweater?", "expected": "answered", "sources": ["fabric-care#1"]},
+  {"id": "q02", "question": "Can I wear my suede Chelsea boots in the rain?", "expected": "answered", "sources": ["shoe-care#1"]},
+  {"id": "q03", "question": "What does smart casual mean?", "expected": "answered", "sources": ["dress-codes#2"]},
+  {"id": "q04", "question": "What should I wear when it is around freezing outside?", "expected": "answered", "sources": ["layering-and-weather#2"]},
+  {"id": "q05", "question": "Which colours go well with navy?", "expected": "answered", "sources": ["color-matching#2"]},
+  {"id": "q06", "question": "My rain jacket doesn't keep water out anymore. How do I fix it?", "expected": "answered", "sources": ["fabric-care#5"]},
+  {"id": "q07", "question": "My knitted jumper is covered in little fuzzy balls. What can I do?", "expected": "answered", "sources": ["fabric-care#2"]},
+  {"id": "q08", "question": "Which of my shoes are good for walking in the rain?", "expected": "answered", "sources": ["shoe-care#3", "layering-and-weather#3", "tool:search_wardrobe"]},
+  {"id": "q09", "question": "Can I wear black and brown together?", "expected": "answered", "sources": ["color-matching#3"]},
+  {"id": "q10", "question": "How should I dry my running shoes after cleaning them and what do I wear on a hot day?", "expected": "answered", "sources": ["shoe-care#4", "layering-and-weather#5"]},
+  {"id": "q11", "question": "How do I wash my denim jeans, and should I wear white to a wedding?", "expected": "answered", "sources": ["fabric-care#4", "dress-codes#5"]},
+  {"id": "u01", "question": "How much does a new waterproof rain jacket cost?", "expected": "abstained", "sources": []},
+  {"id": "u02", "question": "How do I get a red wine stain out of a silk tie?", "expected": "abstained", "sources": []},
+  {"id": "u03", "question": "What will the weather be in Poznan tomorrow?", "expected": "abstained", "sources": []},
+  {"id": "a01", "question": "What should I wear to the event?", "expected": "needs_clarification", "sources": []}
+]
